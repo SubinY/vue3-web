@@ -10,10 +10,10 @@
       label-width="0"
       class="form center-block"
     >
-      <el-form-item label="Password" prop="pass">
-        <el-select v-model="value" placeholder="Select">
+      <el-form-item label="Mineral" prop="mineral">
+        <el-select v-model="ruleForm.mineral" multiple placeholder="Mineral">
           <el-option-group
-            v-for="group in options"
+            v-for="group in mineralData"
             :key="group.label"
             :label="group.label"
           >
@@ -26,17 +26,17 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-      <el-form-item label="Confirm" prop="checkPass">
+      <el-form-item label="Element" prop="element">
         <el-input
           v-model="ruleForm.checkPass"
           type="password"
           autocomplete="off"
         />
       </el-form-item>
-      <el-form-item label="Age" prop="age">
+      <el-form-item label="ChemicalFormula" prop="chemicalFormula">
         <el-input v-model.number="ruleForm.age" />
       </el-form-item>
-      <el-form-item label="Age1" prop="age">
+      <el-form-item label="Source" prop="source">
         <el-input v-model.number="ruleForm.age" />
       </el-form-item>
       <el-form-item class="form-footer">
@@ -77,15 +77,18 @@
 <script setup name="HomePage">
 import { reactive, ref } from 'vue'
 import { getCurrentInstance, onMounted } from 'vue'
+import { MineralData } from './data'
 
 // const { proxy } = getCurrentInstance() //获取上下文实例，ctx=vue2的this
 
+const mineralData = ref(MineralData)
 const ruleFormRef = ref()
 
 const ruleForm = reactive({
-  pass: '',
-  checkPass: '',
-  age: ''
+  mineral: '',
+  element: '',
+  chemicalFormula: '',
+  source: ''
 })
 
 const rules = reactive({
@@ -133,14 +136,17 @@ h4 {
 }
 .form {
   max-width: 600px;
-  /deep/ .el-form-item {
+  :deep(.el-select) {
+    width: 100%;
+  }
+  :deep(.el-form-item) {
     margin-bottom: 6px;
     > label {
       visibility: hidden;
     }
   }
   .form-footer {
-    /deep/ .el-form-item__content {
+    :deep(.el-form-item__content) {
       justify-content: center;
       padding: 5px 0;
       .el-button {
