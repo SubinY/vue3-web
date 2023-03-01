@@ -6,7 +6,7 @@
         <div class="col-xs-12 col-sm-12 col-md-6 wow zoomIn">
           <img
             class="img-responsive center-block"
-            src="@/assets/img/about_img.png"
+            src=""
           />
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
@@ -45,7 +45,7 @@ onMounted(() => {
   font-size: 30px;
   height: 150px;
   line-height: 150px;
-  background-image: url('../assets/img/banner1.png');
+  /* background-image: url('../assets/img/banner1.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: scroll;

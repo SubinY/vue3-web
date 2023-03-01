@@ -20,7 +20,7 @@
             <span>{{ item.year }}</span>
           </div>
           <div class="circle">
-            <img src="@/assets/img/circle.png" />
+            <img />
             <i class="line center-block"></i>
           </div>
         </li>

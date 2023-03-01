@@ -26,18 +26,14 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-      <el-form-item label="Element" prop="element">
-        <el-input
-          v-model="ruleForm.checkPass"
-          type="password"
-          autocomplete="off"
-        />
+      <el-form-item label="Chemistry" prop="chemistry">
+        <el-input v-model="chemistrys" />
       </el-form-item>
       <el-form-item label="ChemicalFormula" prop="chemicalFormula">
-        <el-input v-model.number="ruleForm.age" />
+        <el-input v-model="ruleForm.age" />
       </el-form-item>
       <el-form-item label="Source" prop="source">
-        <el-input v-model.number="ruleForm.age" />
+        <el-input v-model="ruleForm.age" />
       </el-form-item>
       <el-form-item class="form-footer">
         <el-button
@@ -53,6 +49,7 @@
         >
       </el-form-item>
     </el-form>
+    <PeriodicTable v-model="chemistrys" />
     <p class="tips center-block">
       Welcome to the MEELS GIG Project websiteWelcome to the MEELS GIG Project
       websiteWelcome to the MEELS GIG Project websiteWelcome to the MEELS GIG
@@ -78,15 +75,17 @@
 import { reactive, ref } from 'vue'
 import { getCurrentInstance, onMounted } from 'vue'
 import { MineralData } from './data'
+import PeriodicTable from '@/components/PeriodicTable/index.vue'
 
 // const { proxy } = getCurrentInstance() //获取上下文实例，ctx=vue2的this
 
 const mineralData = ref(MineralData)
+const chemistrys = ref([])
 const ruleFormRef = ref()
 
 const ruleForm = reactive({
   mineral: '',
-  element: '',
+  chemistry: '',
   chemicalFormula: '',
   source: ''
 })
@@ -124,15 +123,15 @@ function handleReset() {}
 .home-page {
   background-color: @color-secondary;
   min-height: @page-content-min-height;
-  padding: 30px 0;
+  padding: 50px 0;
   overflow: hidden;
   color: @color-text-gray;
 }
 h4 {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .second-h4 {
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 .form {
   max-width: 600px;
@@ -140,7 +139,7 @@ h4 {
     width: 100%;
   }
   :deep(.el-form-item) {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     > label {
       visibility: hidden;
     }
@@ -148,7 +147,8 @@ h4 {
   .form-footer {
     :deep(.el-form-item__content) {
       justify-content: center;
-      padding: 5px 0;
+      padding: 15px 0;
+      margin-bottom: 20px;
       .el-button {
         width: 110px;
       }
@@ -169,7 +169,7 @@ h4 {
     flex-direction: column;
     justify-content: center;
     border-right: 1px solid #aaa;
-    padding: 15px 0;
+    padding: 20px 0;
     &:last-child {
       border: none;
     }
@@ -189,6 +189,7 @@ h4 {
   text-align: left;
   max-width: 600px;
   font-size: 12px;
+  margin-bottom: 20px;
 }
 </style>
 

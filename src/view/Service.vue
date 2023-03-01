@@ -32,34 +32,34 @@
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 import WOW from 'wow.js'
-import service1 from '@/assets/img/service1.jpg'
-import service2 from '@/assets/img/service2.jpg'
-import service3 from '@/assets/img/service3.jpg'
-import service4 from '@/assets/img/service4.jpg'
+// import service1 from '@/assets/img/service1.jpg'
+// import service2 from '@/assets/img/service2.jpg'
+// import service3 from '@/assets/img/service3.jpg'
+// import service4 from '@/assets/img/service4.jpg'
 const serviceList = [
   {
     id: 'section-1',
     title: '软件定制开发',
     eng_title: 'Customize App',
-    img: service1
+    // img: service1
   },
   {
     id: 'section-2',
     title: 'IT外包服务',
     eng_title: 'Outsourcing',
-    img: service2
+    // img: service2
   },
   {
     id: 'section-3',
     title: '网上商城建设',
     eng_title: 'eCommerce Site',
-    img: service3
+    // img: service3
   },
   {
     id: 'section-4',
     title: 'iOS应用定制开发',
     eng_title: 'iOS App Dev',
-    img: service4
+    // img: service4
   }
 ]
 
