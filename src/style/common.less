@@ -1,0 +1,21 @@
+@import './variable.less';
+
+.page-container() {
+  background-color: @color-secondary;
+  min-height: @page-content-min-height;
+  padding: 50px 0;
+  overflow: hidden;
+  color: @color-text-gray;
+}
+
+.page-form-footer() {
+  :deep(.el-form-item__content) {
+    justify-content: center;
+    padding: 15px 0;
+    // margin-bottom: 20px;
+    .el-button {
+      width: 110px;
+      font-size: 16px;
+    }
+  }
+}

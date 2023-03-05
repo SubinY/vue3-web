@@ -12,27 +12,23 @@
     >
       <el-form-item label="Mineral" prop="mineral">
         <MineralSelect v-model="ruleForm.mineral" />
-        <!-- <el-select v-model="ruleForm.mineral" multiple placeholder="Mineral">
-          <el-option-group
-            v-for="group in mineralData"
-            :key="group.label"
-            :label="group.label"
-          >
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-option-group>
-        </el-select> -->
       </el-form-item>
-      <el-form-item label="Chemistry" prop="chemistry">
+      <el-form-item
+        class="chemistry-form-item"
+        label="Chemistry"
+        prop="chemistry"
+      >
         <el-input
-          v-model="ruleForm.chemistry"
+          :value="ruleForm.chemistry"
           placeholder="Chemistry"
           readonly
         />
+        <el-icon
+          v-if="ruleForm.chemistry?.length"
+          class="mineral-select-close"
+          @click.stop="handleClear"
+          ><CircleClose
+        /></el-icon>
         <el-button
           class="chemistrys-select"
           type="primary"
@@ -47,7 +43,14 @@
         />
       </el-form-item>
       <el-form-item label="Source" prop="source">
-        <el-input v-model="ruleForm.source" placeholder="Source" />
+        <el-select v-model="ruleForm.source" placeholder="Source">
+          <el-option
+            v-for="item in SourceData"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item class="form-footer">
         <el-button
@@ -64,14 +67,14 @@
       </el-form-item>
     </el-form>
     <PeriodicTable v-if="isPeriodicShow" v-model="ruleForm.chemistry" />
-    <p class="tips center-block">
+    <!-- <p class="tips center-block">
       查询条件：Lorem ipsum dolor sit amet, consectetur adipiscing edit. Aenean
       euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et
       viverra justo commodo. Proin sodales pulvinar sic tempor. Sociis natoque
       penatibus et magnis dis partuient montes, nascetur ridiculus mus. Nam
       fermentum, nulla Ictus pharetra vulputate, felis tellus mollis orci, sed
       rhoncus pronin sapien nunc accuan eget.
-    </p>
+    </p> -->
     <div class="card-wrap center-block">
       <a target="_blank" href="https://rruff.info/#"
         ><img src="/src/assets/img/EELS1.gif"
@@ -89,6 +92,7 @@
 <script setup name="HomePage">
 import { reactive, ref } from 'vue'
 import { getCurrentInstance, onMounted } from 'vue'
+import { SourceData } from './data'
 import PeriodicTable from '@/components/PeriodicTable/index.vue'
 import MineralSelect from './components/MineralSelect/index.vue'
 
@@ -136,16 +140,16 @@ function handleReset(formEl) {
   if (!formEl) return
   formEl.resetFields()
 }
+
+function handleClear() {
+  ruleForm.chemistry = []
+}
 </script>
 
 <style lang="less" scoped>
 /* 整体盒子 */
 .home-page {
-  background-color: @color-secondary;
-  min-height: @page-content-min-height;
-  padding: 50px 0;
-  overflow: hidden;
-  color: @color-text-gray;
+  .page-container;
 }
 h4 {
   margin-bottom: 40px;
@@ -165,16 +169,21 @@ h4 {
       visibility: hidden;
     }
   }
+  .chemistrys-form-item {
+    position: relative;
+  }
+  :deep(.el-input__wrapper) {
+    padding-right: 20px;
+  }
+  .mineral-select-close {
+    position: absolute;
+    right: 4px;
+    top: 11px;
+    color: #aaa;
+    cursor: pointer;
+  }
   .form-footer {
-    :deep(.el-form-item__content) {
-      justify-content: center;
-      padding: 15px 0;
-      // margin-bottom: 20px;
-      .el-button {
-        width: 110px;
-        font-size: 16px;
-      }
-    }
+    .page-form-footer;
   }
 
   .chemistrys-select {

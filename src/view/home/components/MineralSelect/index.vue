@@ -1,6 +1,12 @@
 <template>
   <div class="mineral-select-wrap" @click="visible = true">
     <el-input v-model="data" readonly placeholder="Mineral" />
+    <el-icon
+      v-if="data.length"
+      class="mineral-select-close"
+      @click.stop="handleClear"
+      ><CircleClose
+    /></el-icon>
   </div>
   <el-dialog v-model="visible" width="80%" top="5vh" destroy-on-close>
     <div class="select-show">
@@ -93,11 +99,27 @@ const handleClose = (tag) => {
   data.splice(data.indexOf(tag), 1)
   emit('update:modelValue', data)
 }
+
+const handleClear = () => {
+  data = []
+  emit('update:modelValue', data)
+}
 </script>
 
 <style lang="less" scoped>
 .mineral-select-wrap {
   width: 100%;
+  position: relative;
+  :deep(.el-input__wrapper) {
+    padding-right: 20px;
+  }
+  .mineral-select-close {
+    position: absolute;
+    right: 4px;
+    top: 11px;
+    color: #aaa;
+    cursor: pointer;
+  }
 }
 .select-show {
   margin-bottom: 10px;

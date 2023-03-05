@@ -19,12 +19,16 @@ import './assets/js/bootstrap.min.js'
 import 'wow.js/css/libs/animate.css'
 
 import App from './App.vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const router = createRouter()
 const app = createApp(App)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 app.use(ElementPlus)
 app.use(createPinia())
 
 app.use(router).mount('#app')
-

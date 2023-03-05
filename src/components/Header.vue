@@ -5,7 +5,8 @@
     </div>
     <div class="header-right">
       <el-space class="right-top" spacer="/"
-        ><a>Login</a><a>Register</a></el-space
+        ><router-link to="/login">Login</router-link
+        ><router-link to="/register">Register</router-link></el-space
       >
       <div class="right-bottom">
         <ul class="header-nav-wrapper">

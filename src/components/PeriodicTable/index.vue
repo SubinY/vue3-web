@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="modelValue = []">
+  <div class="container">
     <table>
       <tbody>
         <tr v-for="(row, index) in tags" :key="index">
@@ -33,12 +33,17 @@
 <script setup>
 import { tags } from './tags'
 import { colorInfo } from './color'
-import { ref, reactive } from 'vue'
+import { ref, reactive, watchEffect } from 'vue'
 
 const props = defineProps({
   modelValue: []
 })
-const data = reactive(props.modelValue || [])
+let data = reactive(props.modelValue || [])
+
+watchEffect(() => {
+  console.log(props.modelValue, 'mmm')
+  data = props.modelValue
+})
 
 const emit = defineEmits(['update:modelValue'])
 

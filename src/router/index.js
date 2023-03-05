@@ -62,12 +62,21 @@ const routes = [
         ]
       },
       {
-        path: '/service',
-        name: 'service',
-        component: () => import('@/view/Service.vue'),
+        path: '/login',
+        name: 'login',
+        component: () => import('@/view/user/login.vue'),
         props: true,
         meta: {
-          title: '相关服务'
+          title: 'login'
+        }
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/view/user/register.vue'),
+        props: true,
+        meta: {
+          title: 'register'
         }
       },
       {

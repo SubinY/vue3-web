@@ -1,3 +1,26 @@
+export const SourceData = [
+  {
+    value: 'Earth',
+    label: 'Earth',
+  },
+  {
+    value: 'Mars',
+    label: 'Mars',
+  },
+  {
+    value: 'Lunar',
+    label: 'Lunar',
+  },
+  {
+    value: 'meteorolite',
+    label: 'meteorolite',
+  },
+  {
+    value: 'Others',
+    label: 'Others',
+  },
+]
+
 export const MineralData = [
   {
     label: 'A',
