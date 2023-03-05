@@ -1,74 +1,56 @@
 <template>
-  <div class="container" @click.stop="modelValue = []">
+  <div class="container" @click="modelValue = []">
     <table>
       <tbody>
         <tr v-for="(row, index) in tags" :key="index">
-          <td v-for="(col, nums) in row" :key="nums">
+          <td
+            v-for="(col, nums) in row"
+            :key="nums"
+            :style="col.symbol && { border: '1px solid #ccc' }"
+          >
             <div
-              :class="col.class"
+              :class="data.includes(col.symbol) && 'actived'"
               class="elements"
-              v-if="col.name"
-               @click.stop="() => handleSelect(col)"
+              v-if="col.symbol"
+              @click="() => handleSelect(col)"
             >
-              <div class="info" v-if="activeTag === col.name">
-                <h3>
-                  {{ col.name }}
-                </h3>
-                <p>{{ col.cndesc }}</p>
-                <p class="example">
-                  <code>{{ col.code }}</code>
-                </p>
-                <a :href="col.mdnurl" target="_blank" v-if="col.mdnurl">MDN</a>
-                <a :href="col.w3curl" target="_blank" v-if="col.w3curl">W3C</a>
-              </div>
               <div class="element">
-                {{ col.name }}
+                <p>
+                  {{ col.id }}
+                </p>
+                <p>
+                  {{ col.symbol }}
+                </p>
               </div>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <!-- 颜色选择区域 -->
-    <div class="color-select">
-      <ul>
-        <li v-for="(val, key, index) in colorInfo" :key="index">
-          <div
-            :style="{ background: val }"
-            class="icon"
-            @click="classHandle(index)"
-          ></div>
-          <span>{{ key }}</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 纯颜色区域 -->
-    <div class="only-color" v-if="false">
-      <ul>
-        <li v-for="(val, key, index) in colorInfo" :key="index">
-          <div :style="{ background: val }" class="icon"></div>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { tags } from './tags'
 import { colorInfo } from './color'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 const props = defineProps({
   modelValue: []
 })
+const data = reactive(props.modelValue || [])
+
 const emit = defineEmits(['update:modelValue'])
 
-const classType = ref('')
-
 function handleSelect(v) {
-  const { name } = v;
-  emit('update:modelValue', [...props.modelValue, name])
+  const { symbol } = v
+  if (data.includes(symbol)) {
+    data.splice(data.indexOf(symbol), 1)
+    emit('update:modelValue', data)
+    return
+  }
+  data.push(symbol)
+  emit('update:modelValue', data)
 }
 
 function classHandle(index) {
@@ -94,6 +76,7 @@ function classHandle(index) {
   text-align: left;
   font-size: 0.8rem;
   position: relative;
+  margin-bottom: 2rem;
 }
 
 table {
@@ -104,31 +87,40 @@ th,
 td {
   width: 3.5rem;
   height: 3.5rem;
-  padding: 0.02rem;
+  // padding: 0.02rem;
 }
 
 .elements {
-  background: #9d9d9d;
+  background: #fff;
   color: #000;
   cursor: pointer;
   display: block;
   font-size: 0.6rem;
   width: 3.5rem;
   height: 3.5rem;
-  line-height: 3.5rem;
+  // line-height: 3.5rem;
   margin: 0;
   padding: 0;
   /* overflow: hidden; */
   text-align: center;
   position: relative;
-  border-radius: 5%;
+  // border-radius: 5%;
+  > .element {
+    display: flex;
+    flex-direction: column;
+    > p {
+      margin: 0;
+    }
+  }
+  &.actived {
+    background-color: @color-blue;
+    color: #fff;
+  }
 }
 
 .elements:hover {
-  opacity: 1;
-  box-shadow: 2px 2px 2px #fff;
-  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 0px 10px 4px #fff;
+  background-color: @color-blue;
+  color: #fff;
 }
 
 .elements .info {

@@ -24,9 +24,13 @@
               <i class="underline"></i>
             </router-link>
             <dl v-if="item.children.length > 0">
-              <dt v-for="(i, n) in item.children" :key="n">
-                <router-link :to="i.path">{{ i.name }}</router-link>
-              </dt>
+              <router-link
+                :to="i.path"
+                v-for="(i, n) in item.children"
+                :key="n"
+              >
+                <dt>{{ i.name }}</dt></router-link
+              >
             </dl>
           </li>
         </ul>
@@ -73,7 +77,20 @@ const navList = [
   {
     name: 'About Us',
     path: '/about',
-    children: []
+    children: [
+      {
+        name: 'What is EELS?',
+        path: '/about/1'
+      },
+      {
+        name: 'About Source',
+        path: '/about/2'
+      },
+      {
+        name: 'About Us',
+        path: '/about/3'
+      }
+    ]
   },
   {
     name: 'Question',
@@ -105,7 +122,7 @@ function menuClick() {
     width: 300px;
     img {
       position: relative;
-      top: 10px;
+      height: 100%;
     }
   }
   .header-right {
@@ -204,7 +221,8 @@ function menuClick() {
 .header-nav-wrapper > li > dl {
   display: none;
   position: absolute;
-  width: 168px;
+  // width: 168px;
+  min-width: 120px;
   top: 80%;
   left: 0;
   z-index: 999999;
@@ -213,14 +231,18 @@ function menuClick() {
 }
 
 /* 导航栏 每个导航下面的二级导航容器的每个导航 */
-.header-nav-wrapper > li > dl > dt {
+.header-nav-wrapper > li > dl dt {
   width: 100%;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  background-color: @color-primary;
+  color: @color-text-gray;
+  font-weight: normal;
+  text-align: center;
 }
 
 /* 导航栏 每个导航下面的二级导航容器的每个导航 当鼠标滑上时的样式*/
-.header-nav-wrapper > li > dl > dt > a:hover {
+.header-nav-wrapper > li > dl dt > a:hover {
   text-decoration: none;
 }
 
@@ -229,9 +251,9 @@ function menuClick() {
   display: block;
 }
 
-.header-nav-wrapper > li > dl > dt:hover {
+.header-nav-wrapper > li > dl dt:hover {
   cursor: pointer;
-  background: #ccc;
+  background: @color-secondary;
 }
 </style>
 

@@ -28,28 +28,35 @@ const routes = [
         }
       },
       {
-        path: '/software',
-        name: 'software',
-        component: () => import('@/view/Software.vue'),
-        redirect: '/software/smartTown',
+        path: '/about',
+        name: 'About',
+        redirect: '/about/1',
         meta: {
-          title: '软件产品'
+          title: 'About'
         },
         children: [
           {
-            path: '/software/smartTown',
-            name: 'smartTown',
-            component: () => import('@/view/Software_smartTown.vue'),
+            path: '/about/1',
+            name: 'What is EELS?',
+            component: () => import('@/view/about/wathIsEELS.vue'),
             meta: {
-              title: '软件产品丨智能小镇管理系统'
+              title: 'About丨What is EELS'
             }
           },
           {
-            path: '/software/bigData',
-            name: 'bigData',
-            component: () => import('@/view/Software_bigData.vue'),
+            path: '/about/2',
+            name: 'About Source',
+            component: () => import('@/view/about/aboutSource.vue'),
             meta: {
-              title: '软件产品丨大数据管理系统'
+              title: 'About丨About Source'
+            }
+          },
+          {
+            path: '/about/3',
+            name: 'About Us',
+            component: () => import('@/view/about/aboutUs.vue'),
+            meta: {
+              title: 'About丨About Us'
             }
           }
         ]

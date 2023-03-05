@@ -10,7 +10,7 @@ import GoTop from '@/components/GoTop.vue'
   <!-- 路由匹配到的组件将渲染在这里 -->
   <router-view></router-view>
   <Footer></Footer>
-  <GoTop></GoTop>
+  <!-- <GoTop></GoTop> -->
 </template>
 
 <style lang="less" scoped>
