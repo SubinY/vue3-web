@@ -1,6 +1,6 @@
 <template>
   <div class="register-page text-center">
-    <h4>Register</h4>
+    <h3>Register</h3>
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
@@ -10,28 +10,48 @@
       class="form center-block"
     >
       <el-form-item label="Name" prop="name">
-        <el-input v-model.number="ruleForm.name" />
+        <el-input v-model="ruleForm.name" />
+      </el-form-item>
+      <el-form-item label="Organization" prop="organization">
+        <el-input v-model="ruleForm.organization" />
+      </el-form-item>
+      <el-form-item label="Position/Ttile" prop="position">
+        <el-input v-model="ruleForm.position" />
+      </el-form-item>
+      <el-form-item label="ResearchField" prop="naresearchFieldme">
+        <el-input v-model="ruleForm.researchField" />
+      </el-form-item>
+      <el-form-item label="Email" prop="email">
+        <el-input v-model="ruleForm.email" />
+      </el-form-item>
+      <el-form-item label="Address" prop="address">
+        <el-input v-model="ruleForm.address" />
       </el-form-item>
       <el-form-item label="Password" prop="pass">
         <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="Confirm" prop="checkPass">
+      <el-form-item label="PasswordCheck" prop="checkPassword">
         <el-input
-          v-model="ruleForm.checkPass"
+          v-model="ruleForm.checkPassword"
           type="password"
           autocomplete="off"
         />
       </el-form-item>
-      <el-form-item label="Age" prop="age">
-        <el-input v-model.number="ruleForm.age" />
-      </el-form-item>
       <el-form-item class="form-footer">
-        <el-button type="primary" @click="submitForm(ruleFormRef)"
-          >Login</el-button
+        <el-button
+          style="margin-right: 160px"
+          type="primary"
+          @click="submitForm(ruleFormRef)"
+          >Submit</el-button
         >
         <el-button @click="resetForm(ruleFormRef)">Cancel</el-button>
       </el-form-item>
     </el-form>
+    <p class="tips center-block">
+      Lorem ipsum dolor sit amet, consectetur adipiscing edit. Aenean euismod
+      bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra
+      justo commodo. Proin sodales pulvinar sic tempor.
+    </p>
   </div>
 </template>
 <script setup name="Register">
@@ -40,21 +60,11 @@ import { reactive, ref } from 'vue'
 
 const ruleFormRef = ref()
 
-const checkAge = (rule, value, callback) => {
-  if (!value) {
-    return callback(new Error('Please input the age'))
+const validateName = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('Name is required'))
   }
-  setTimeout(() => {
-    if (!Number.isInteger(value)) {
-      callback(new Error('Please input digits'))
-    } else {
-      if (value < 18) {
-        callback(new Error('Age must be greater than 18'))
-      } else {
-        callback()
-      }
-    }
-  }, 1000)
+  callback()
 }
 
 const validatePass = (rule, value, callback) => {
@@ -79,15 +89,27 @@ const validatePass2 = (rule, value, callback) => {
 }
 
 const ruleForm = reactive({
-  pass: '',
-  checkPass: '',
-  age: ''
+  name: '',
+  organization: '',
+  position: '',
+  researchField: '',
+  email: '',
+  address: '',
+  password: '',
+  checkPassword: ''
 })
 
 const rules = reactive({
-  pass: [{ validator: validatePass, trigger: 'blur' }],
-  checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-  age: [{ validator: checkAge, trigger: 'blur' }]
+  name: [{ validator: validateName, trigger: 'blur' }],
+  email: [
+    {
+      type: 'email',
+      message: 'Please input correct email address',
+      trigger: ['blur', 'change']
+    }
+  ],
+  password: [{ validator: validatePass, trigger: 'blur' }],
+  checkPassword: [{ validator: validatePass2, trigger: 'blur' }]
 })
 
 const submitForm = (formEl) => {
@@ -119,10 +141,10 @@ function ServiceClick(id) {
 }
 </script>
 <style lang="less" scoped>
-.login-page {
+.register-page {
   .page-container;
 
-  h4 {
+  h3 {
     margin-bottom: 40px;
   }
   .form {
@@ -133,6 +155,10 @@ function ServiceClick(id) {
     .form-footer {
       .page-form-footer;
     }
+  }
+  .tips {
+    max-width: 750px;
+    line-height: 30px;
   }
 }
 </style>

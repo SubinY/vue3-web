@@ -41,19 +41,20 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { useRoute } from 'vue-router'
+import { ref, reactive, watchEffect } from 'vue'
+
 const phone = import.meta.env.VITE_APP_PHONE
 const email = import.meta.env.VITE_APP_EMAIL
+
+const route = useRoute()
 const navIndex = ref('')
-navIndex.value = sessionStorage.getItem('navIndex')
-  ? sessionStorage.getItem('navIndex')
-  : 2
 const menuName = ref('首页')
 const menuClass = ref('glyphicon glyphicon-menu-down')
 const navList = [
   {
     name: 'Home',
-    path: '/',
+    path: '/home',
     children: []
   },
   // {
@@ -99,9 +100,20 @@ const navList = [
     children: []
   }
 ]
+
+// navIndex.value = navList.findIndex(
+//   (item) => route.path.indexof(item.path) !== -1
+// )
+
+watchEffect(() => {
+  navIndex.value = navList.findIndex((item) => {
+    console.log(route.path.split('/'), item.path, 'ppp')
+    return route.path.split('/').includes(item.path.slice(1))
+  })
+})
+
 function navClick(index, name) {
   navIndex.value = index
-  sessionStorage.setItem('navIndex', index)
   menuName.value = name
 }
 function menuClick() {

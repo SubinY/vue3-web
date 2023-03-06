@@ -62,6 +62,15 @@ const routes = [
         ]
       },
       {
+        path: '/question',
+        name: 'question',
+        component: () => import('@/view/question/index.vue'),
+        props: true,
+        meta: {
+          title: 'question'
+        }
+      },
+      {
         path: '/login',
         name: 'login',
         component: () => import('@/view/user/login.vue'),

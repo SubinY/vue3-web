@@ -1,6 +1,6 @@
 <template>
-  <div class="login-page text-center">
-    <h3>Login</h3>
+  <div class="question-page text-center">
+    <h3>We look forward to your suggestions to make us better</h3>
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
@@ -9,15 +9,29 @@
       label-width="0"
       class="form center-block"
     >
-      <el-form-item label="Name" prop="name">
-        <el-input v-model="ruleForm.name" />
+      <el-form-item label="About You" prop="aboutYou">
+        <el-input v-model="ruleForm.aboutYou" />
       </el-form-item>
-      <el-form-item label="Password" prop="password">
+      <el-form-item label="Question Category" prop="questionCategory">
+        <el-select v-model="ruleForm.questionCategory" placeholder="Select">
+          <el-option
+            v-for="item in quesCategory"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Question Description" prop="questionDescription">
         <el-input
-          v-model="ruleForm.password"
-          type="password"
-          autocomplete="off"
+          type="textarea"
+          :rows="5"
+          v-model="ruleForm.questionDescription"
+          resize="none"
         />
+      </el-form-item>
+      <el-form-item label="Your Email" prop="email">
+        <el-input v-model="ruleForm.email" />
       </el-form-item>
       <el-form-item class="form-footer">
         <el-button
@@ -29,16 +43,22 @@
         <el-button @click="resetForm(ruleFormRef)">Cancel</el-button>
       </el-form-item>
     </el-form>
-    <p class="tips center-block">
-      Lorem ipsum dolor sit amet, consectetur adipiscing edit. Aenean euismod
-      bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra
-      justo commodo. Proin sodales pulvinar sic tempor.
-    </p>
   </div>
 </template>
 <script setup name="Login">
 import { useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
+
+const quesCategory = [
+  {
+    label: 'a',
+    value: 'a'
+  },
+  {
+    label: 'b',
+    value: 'b'
+  }
+]
 
 const ruleFormRef = ref()
 
@@ -49,21 +69,22 @@ const validateName = (rule, value, callback) => {
   callback()
 }
 
-const validatePass = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error('Password is required'))
-  }
-  callback()
-}
-
 const ruleForm = reactive({
-  name: '',
-  password: ''
+  aboutYou: '',
+  questionCategory: '',
+  questionDescription: '',
+  email: ''
 })
 
 const rules = reactive({
   name: [{ validator: validateName, trigger: 'blur' }],
-  password: [{ validator: validatePass, trigger: 'blur' }]
+  email: [
+    {
+      type: 'email',
+      message: 'Please input correct email address',
+      trigger: ['blur', 'change']
+    }
+  ]
 })
 
 const submitForm = (formEl) => {
@@ -95,7 +116,7 @@ function ServiceClick(id) {
 }
 </script>
 <style lang="less" scoped>
-.login-page {
+.question-page {
   .page-container;
 
   h3 {
@@ -103,16 +124,22 @@ function ServiceClick(id) {
   }
   .form {
     max-width: 600px;
+    :deep(.el-form-item) {
+      position: relative;
+    }
     :deep(.el-form-item__label) {
       color: @color-text-gray;
+      position: absolute;
+      min-width: 160px;
+      left: -160px;
+      text-align: right;
+    }
+    :deep(.el-select) {
+      width: 100%;
     }
     .form-footer {
       .page-form-footer;
     }
-  }
-  .tips {
-    max-width: 750px;
-    line-height: 30px;
   }
 }
 </style>
