@@ -1,10 +1,11 @@
 import axios from 'axios'
-import * as R from 'ramda'
+import { curry, omit } from 'lodash'
 import { ApiBaseName } from '../constants/api'
 import globalTips from './globalTips'
 import path from 'path'
 import pathToRegexp from 'path-to-regexp'
 import querystring from 'querystring'
+import { Modal } from 'ant-design-vue';
 
 const GLOBAL_ERROR = {
   40006: {
@@ -60,10 +61,7 @@ export default function request(endpoint, method, data = {}, options = {}) {
     })
   // 表示endpoint自带host
   const host = options.useOriginHost ? '' : ApiBaseName
-  const endpoint1 =
-    method === 'GET'
-      ? `${host}${endpoint}?${keyValue}`.slice(0, -1)
-      : `${host}${endpoint}`
+  const endpoint1 = method === 'GET' ? `${host}${endpoint}?${keyValue}`.slice(0, -1) : `${host}${endpoint}`
 
   const myHeaders = {
     'Content-Type': contentType
@@ -88,7 +86,7 @@ export default function request(endpoint, method, data = {}, options = {}) {
         data: method !== 'GET' ? data || {} : void 0
       })
       .then((res) => {
-        if ((res && res.status == 200) || res.status == 201) {
+        if ((res && res.status === 200) || res.status === 201) {
           const response = res.data
           try {
             Object.defineProperty(response, 'getResponse', {
@@ -113,11 +111,7 @@ export default function request(endpoint, method, data = {}, options = {}) {
       })
       .catch((err) => {
         console.log('reject', err, err.message)
-        if (
-          err &&
-          err.message &&
-          err.message.toLowerCase() === 'network error'
-        ) {
+        if (err && err.message && err.message.toLowerCase() === 'network error') {
           !options.noTips &&
             globalTips({
               message: '网络错误请重试' || '',
@@ -141,29 +135,27 @@ export default function request(endpoint, method, data = {}, options = {}) {
 }
 
 // 后台的服务名称
-export const requestX = R.curry(
-  (method, apiPath, { urlData = {}, bodyData = null }) => {
-    let apiUrl = pathToRegexp.compile(`${path.join('/', apiPath)}`)({
-      ...urlData
-    })
-    const { $params = {} } = urlData || {}
-    const strParamsQueryString = querystring.stringify($params)
-    if (strParamsQueryString) {
-      apiUrl = `${apiUrl}?${strParamsQueryString}`
-    }
-    return request(apiUrl, method, bodyData)
+export const requestX = curry((method, apiPath, { urlData = {}, bodyData = null }) => {
+  let apiUrl = pathToRegexp.compile(`/${apiPath}`)({
+    ...urlData
+  })
+  const { $params = {} } = urlData || {}
+  const strParamsQueryString = querystring.stringify($params)
+  if (strParamsQueryString) {
+    apiUrl = `${apiUrl}?${strParamsQueryString}`
   }
-)
+  return request(apiUrl, method, bodyData)
+})
 
 // POST 请求
-export const postX = R.curry((apiPath, data) => {
+export const postX = curry((apiPath, data) => {
   return requestX('POST', apiPath, {
-    urlData: { $params: R.path(['$params'], data) },
+    urlData: { $params: data?.$params },
     bodyData:
       typeof data === typeof void 0
         ? {}
         : typeof data === 'object' && !(data instanceof Array)
-        ? R.dissoc('$params', data)
+        ? omit(data, ['$params'])
         : data
   })
 })
@@ -175,25 +167,25 @@ export const postX = R.curry((apiPath, data) => {
  *       传入 { roleId: 1, $param: { a: 1 } } 会自动拼接为 'v1/role/1?a=1'
  */
 // GET 请求
-export const getX = R.curry((apiPath, data) => {
+export const getX = curry((apiPath, data) => {
   return requestX('GET', apiPath, { urlData: data })
 })
 
 // PUT 请求
-export const putX = R.curry((apiPath, data) => {
+export const putX = curry((apiPath, data) => {
   return requestX('PUT', apiPath, {
-    urlData: { $params: R.path('$params', data) },
+    urlData: { $params: data?.$params },
     bodyData:
       typeof data === typeof void 0
         ? {}
         : typeof data === 'object' && !(data instanceof Array)
-        ? R.dissoc('$params', data)
+        ? omit(data, ['$params'])
         : data
   })
 })
 
 // DELETE 请求
 // 用法参考 getX
-export const deleteX = R.curry((apiPath, data) => {
+export const deleteX = curry((apiPath, data) => {
   return requestX('DELETE', apiPath, { urlData: data })
 })

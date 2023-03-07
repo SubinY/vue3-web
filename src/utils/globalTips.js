@@ -3,6 +3,7 @@ import { ElMessageBox } from 'element-plus'
 let globalTipsInstance = null
 
 function globalTips(opts) {
+
   const {
     tipsType,
     type = 'error',
@@ -11,8 +12,6 @@ function globalTips(opts) {
     goLogin,
     reload
   } = opts
-
-  console.log(tipsType)
 
   if (globalTipsInstance) {
     globalTipsInstance.destroy()

@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "id": 1,
+      "mineral": ["test"],
+      "chemistry": ["R", "C"],
+      "chemicalFormula": "chemicalFormula",
+      "source": "source",
+      "status": 1,
+      "edge": 1,
+      "type": 1
+    },
+    {
+      "id": 2,
+      "mineral": ["tes3t"],
+      "chemistry": ["R", "C"],
+      "chemicalFormula": "chemicalFormula",
+      "source": "source",
+      "status": 1,
+      "edge": 1,
+      "type": 1
+    },
+    {
+      "id": 3,
+      "mineral": ["test2"],
+      "chemistry": ["R", "C"],
+      "chemicalFormula": "chemicalFormula",
+      "source": "source",
+      "status": 1,
+      "edge": 1,
+      "type": 1
+    }
+  ]
+}

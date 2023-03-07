@@ -32,19 +32,43 @@
           <el-col :span="6">
             <el-input v-model="query.chemicalFormula" placeholder="ChemicalFormula" class="handle-input mr10"></el-input
           ></el-col>
-          <el-col :span="6"> <el-button type="primary" :icon="Search" @click="handleSearch">Search</el-button></el-col>
+          <el-col :span="6"> <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button></el-col>
         </el-row>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-        <el-table-column prop="mineral" label="Mineral"></el-table-column>
-        <el-table-column prop="chemistry" label="Chemistry"></el-table-column>
-        <el-table-column prop="chemicalFormula" label="Chemical Formula"></el-table-column>
-        <el-table-column prop="source" label="Source"> </el-table-column>
-        <el-table-column prop="status" label="Sample Status"></el-table-column>
-        <el-table-column prop="edge" label="Edge"></el-table-column>
-        <el-table-column label="More Detail" width="100">
+        <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
+        <el-table-column prop="name" label="用户名"></el-table-column>
+        <el-table-column label="账户余额">
+          <template #default="scope">￥{{ scope.row.money }}</template>
+        </el-table-column>
+        <el-table-column label="头像(查看大图)" align="center">
           <template #default="scope">
-            <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15"> Check </el-button>
+            <el-image
+              class="table-td-thumb"
+              :src="scope.row.thumb"
+              :z-index="10"
+              :preview-src-list="[scope.row.thumb]"
+              preview-teleported
+            >
+            </el-image>
+          </template>
+        </el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column label="状态" align="center">
+          <template #default="scope">
+            <el-tag :type="scope.row.state === '成功' ? 'success' : scope.row.state === '失败' ? 'danger' : ''">
+              {{ scope.row.state }}
+            </el-tag>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="date" label="注册时间"></el-table-column>
+        <el-table-column label="操作" width="220" align="center">
+          <template #default="scope">
+            <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15"> 编辑 </el-button>
+            <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index)" v-permiss="16">
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,15 +109,14 @@ import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
 import { SourceData } from '@/constants/options'
-import useListFetch from './useListFetch.js'
 // import { fetchData } from '../api/index'
 
-const { list, fetch } = useListFetch()
 const query = reactive({
   mineral: [],
   chemistry: [],
   chemicalFormula: '',
   source: '',
+  name: '',
   status: '',
   edge: '',
   type: '',
@@ -120,6 +143,19 @@ const handleSearch = () => {
 const handlePageChange = (val: number) => {
   query.pageIndex = val
   getData()
+}
+
+// 删除操作
+const handleDelete = (index: number) => {
+  // 二次确认删除
+  ElMessageBox.confirm('确定要删除吗？', '提示', {
+    type: 'warning'
+  })
+    .then(() => {
+      ElMessage.success('删除成功')
+      tableData.value.splice(index, 1)
+    })
+    .catch(() => {})
 }
 
 // 表格编辑时弹窗和保存
@@ -165,13 +201,8 @@ const saveEdit = () => {
 .table {
   width: 100%;
   font-size: 14px;
-  :deep(table) {
-    thead > tr > th {
-      background-color: #34349a;
-      color: #fff;
-      font-size: 12px;
-      text-align: center;
-    }
+  thead {
+    background-color: @color-secondary;
   }
 }
 .red {
