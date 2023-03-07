@@ -65,7 +65,7 @@ import {
   watchEffect,
   getCurrentInstance
 } from 'vue'
-import { MineralData } from '../../data'
+import { MineralData } from '@/constants/options'
 import { cloneDeep } from 'lodash'
 import { calcList } from './util'
 

@@ -38,4 +38,3 @@ const qqgroup = import.meta.env.VITE_APP_QQGROUP
   margin-bottom: 15px !important;
 }
 </style>
-

@@ -92,7 +92,7 @@
 <script setup name="HomePage">
 import { reactive, ref } from 'vue'
 import { getCurrentInstance, onMounted } from 'vue'
-import { SourceData } from './data'
+import { SourceData } from '@/constants/options'
 import PeriodicTable from '@/components/PeriodicTable/index.vue'
 import MineralSelect from './components/MineralSelect/index.vue'
 
@@ -229,4 +229,3 @@ h4 {
   margin-bottom: 20px;
 }
 </style>
-

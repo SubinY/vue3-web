@@ -2,19 +2,23 @@
   "name": "chemistry-web",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,js,jsx}\" --fix"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "animate.css": "^4.1.1",
+    "axios": "^1.3.4",
     "element-plus": "^2.2.32",
     "jquery": "^3.6.1",
     "less": "^4.1.3",
+    "path-to-regexp": "^6.2.1",
     "pinia": "^2.0.32",
+    "pinia-plugin-persistedstate": "^3.1.0",
+    "querystring": "^0.2.1",
     "swiper": "^8.4.5",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
@@ -23,6 +27,13 @@
   "devDependencies": {
     "@rollup/plugin-inject": "^5.0.2",
     "@vitejs/plugin-vue": "^3.2.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^7.17.0",
+    "prettier": "^2.8.4",
     "vite": "^3.2.3",
     "vite-plugin-html": "^3.2.0"
   }

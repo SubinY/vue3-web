@@ -117,7 +117,7 @@ function navClick(index, name) {
   menuName.value = name
 }
 function menuClick() {
-  if (menuClass.value == 'glyphicon glyphicon-menu-down') {
+  if (menuClass.value === 'glyphicon glyphicon-menu-down') {
     menuClass.value = 'glyphicon glyphicon-menu-up'
   } else {
     menuClass.value = 'glyphicon glyphicon-menu-down'
@@ -269,4 +269,3 @@ function menuClick() {
   background: @color-secondary;
 }
 </style>
-

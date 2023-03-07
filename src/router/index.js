@@ -28,6 +28,31 @@ const routes = [
         }
       },
       {
+        path: '/data-resources',
+        name: 'DataResources',
+        meta: {
+          title: 'DataResources'
+        },
+        children: [
+          {
+            path: '/data-resources',
+            name: 'DataResources',
+            component: () => import('@/view/dataResources/list.vue'),
+            meta: {
+              title: 'DataResources'
+            }
+          },
+          {
+            path: '/data-resources/detail',
+            name: 'DataResource Detail',
+            component: () => import('@/view/dataResources/detail.vue'),
+            meta: {
+              title: 'DataResources Detail'
+            }
+          }
+        ]
+      },
+      {
         path: '/about',
         name: 'About',
         redirect: '/about/1',
@@ -139,4 +164,3 @@ export function createRouter() {
     routes
   })
 }
-

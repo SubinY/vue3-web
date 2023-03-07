@@ -2,8 +2,8 @@
   "semi": false,
   "singleQuote": true,
   "trailingComma": "none",
-  "printWidth": 80,
-  "endOfLine": "crlf",
+  "printWidth": 120,
+  "endOfLine": "lf",
   "overrides": [
     {
       "files": ".prettierrc",

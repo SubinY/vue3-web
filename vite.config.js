@@ -38,11 +38,13 @@ export default defineConfig({
         modifyVars: {
           // 用于全局导入，以避免需要单独导入每个样式文件。
           // reference:  避免重复引用
-          hack: `true; @import (reference) "${resolve('src/style/index.less')}";`,
+          hack: `true; @import (reference) "${resolve(
+            'src/style/index.less'
+          )}";`
           // ↓这行代码下一章讲
           // ...generateModifyVars(),
         },
-        javascriptEnabled: true,
+        javascriptEnabled: true
       }
     }
   }
