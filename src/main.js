@@ -3,6 +3,7 @@ import { createRouter } from '@/router'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import './style/element-variables.less'
 
 /* swiper */
 // import 'swiper/swiper.min.css'
