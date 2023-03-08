@@ -10,7 +10,7 @@ export const DOMAIN = 'localhost:5173';
 export const TEST_BASENAME = HTTP + 'localhost:5173';
 
 /* test api url */
-export const TEST_API_SERVER = HTTP + 'localhost:51734';
+export const TEST_API_SERVER = HTTP + 'localhost:5173';
 
 /* production base name */
 export const PRO_BASENAME = HTTPS + DOMAIN;

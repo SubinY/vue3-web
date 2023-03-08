@@ -3,18 +3,18 @@ module.exports = {
   root: true,
   parserOptions: {
     parser: 'babel-eslint',
-    sourceType: 'module'
+    sourceType: 'module',
+    jsxPragma: 'React',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   env: {
     browser: true,
     node: true,
     es6: true
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'plugin:prettier/recommended'],
   plugins: [
     // 检查html文件中的js代码
     'html'
@@ -54,7 +54,7 @@ module.exports = {
     'no-var': 2, // 禁止使用 var 声明变量
     'object-shorthand': 2, // 要求使用对象方法名和属性名简写
     'prefer-arrow-callback': 2, // 要求回调函数使用箭头函数
-    'prefer-const': 2, // 使用 const 声明那些声明后不再被修改的变量
+    'prefer-const': 1, // 使用 const 声明那些声明后不再被修改的变量
     'prefer-rest-params': 2, // 要求使用剩余参数而不是 arguments
 
     /**
@@ -75,6 +75,6 @@ module.exports = {
     'spaced-comment': ['error', 'always'], // 注释后面必须跟随至少一个空白
     'object-curly-spacing': 0,
     'no-unused-expressions': 0,
-    'no-unused-vars': 1,
+    'no-unused-vars': 1
   }
 }

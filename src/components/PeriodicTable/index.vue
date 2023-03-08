@@ -33,7 +33,7 @@
 <script setup>
 import { tags } from './tags'
 import { colorInfo } from './color'
-import { ref, reactive, watchEffect } from 'vue'
+import { defineProps, defineEmits, reactive, watchEffect } from 'vue'
 
 const props = defineProps({
   modelValue: []

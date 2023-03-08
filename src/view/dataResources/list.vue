@@ -44,7 +44,7 @@
         <el-table-column prop="edge" label="Edge"></el-table-column>
         <el-table-column label="More Detail" width="100">
           <template #default="scope">
-            <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15"> Check </el-button>
+            <el-button text @click="handleCheck(scope.$index, scope.row)" v-permiss="15"> Check </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -82,13 +82,15 @@
 
 <script setup lang="ts" name="basetable">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
 import { SourceData } from '@/constants/options'
 import useListFetch from './useListFetch.js'
 // import { fetchData } from '../api/index'
 
-const { list, fetch } = useListFetch()
+const router = useRouter()
+const { tableData, pageTotal, fetch } = useListFetch()
 const query = reactive({
   mineral: [],
   chemistry: [],
@@ -100,26 +102,16 @@ const query = reactive({
   pageIndex: 1,
   pageSize: 10
 })
-const tableData = ref([])
-const pageTotal = ref(0)
-// 获取表格数据
-const getData = () => {
-  // fetchData().then((res) => {
-  //   tableData.value = res.data.list
-  //   pageTotal.value = res.data.pageTotal || 50
-  // })
-}
-getData()
 
 // 查询操作
 const handleSearch = () => {
   query.pageIndex = 1
-  getData()
+  fetch()
 }
 // 分页导航
 const handlePageChange = (val: number) => {
   query.pageIndex = val
-  getData()
+  fetch()
 }
 
 // 表格编辑时弹窗和保存
@@ -129,11 +121,14 @@ let form = reactive({
   address: ''
 })
 let idx: number = -1
-const handleEdit = (index: number, row: any) => {
-  idx = index
-  form.name = row.name
-  form.address = row.address
-  editVisible.value = true
+const handleCheck = (index: number, row: any) => {
+  router.push({
+    path: '/data-resources/detail',
+    query: {
+      id: 123,
+      name: 'asdf'
+    }
+  })
 }
 const saveEdit = () => {
   editVisible.value = false

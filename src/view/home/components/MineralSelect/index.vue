@@ -1,42 +1,18 @@
 <template>
   <div class="mineral-select-wrap" @click="visible = true">
     <el-input v-model="data" readonly placeholder="Mineral" />
-    <el-icon
-      v-if="data.length"
-      class="mineral-select-close"
-      @click.stop="handleClear"
-      ><CircleClose
-    /></el-icon>
+    <el-icon v-if="data.length" class="mineral-select-close" @click.stop="handleClear"><CircleClose /></el-icon>
   </div>
   <el-dialog v-model="visible" width="80%" top="5vh" destroy-on-close>
     <div class="select-show">
       已选择：
-      <el-tag
-        v-for="d in data"
-        class="select-tag"
-        :key="d"
-        closable
-        type="info"
-        @close="handleClose(tag)"
-      >
+      <el-tag v-for="d in data" class="select-tag" :key="d" closable type="info" @close="handleClose(tag)">
         {{ d }}
       </el-tag>
     </div>
-    <el-tabs
-      tab-position="left"
-      style="height: 65vh; overflow-y: scroll"
-      class="demo-tabs"
-    >
-      <el-tab-pane
-        v-for="panelItem in mineralData"
-        :label="panelItem.label"
-        :key="panelItem.label"
-      >
-        <div
-          class="mineral-list"
-          v-for="(group, groupIndex) in panelItem.options"
-          :key="groupIndex"
-        >
+    <el-tabs tab-position="left" style="height: 65vh; overflow-y: scroll" class="demo-tabs">
+      <el-tab-pane v-for="panelItem in mineralData" :label="panelItem.label" :key="panelItem.label">
+        <div class="mineral-list" v-for="(group, groupIndex) in panelItem.options" :key="groupIndex">
           <span
             class="mineral-item"
             :class="data.includes(item.value) && 'actived'"
@@ -57,14 +33,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  reactive,
-  computed,
-  watch,
-  watchEffect,
-  getCurrentInstance
-} from 'vue'
+import { ref, reactive, computed, watch, watchEffect, getCurrentInstance, defineProps, defineEmits } from 'vue'
 import { MineralData } from '@/constants/options'
 import { cloneDeep } from 'lodash'
 import { calcList } from './util'

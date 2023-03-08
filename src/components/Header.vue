@@ -4,9 +4,15 @@
       <img class="logo" src="@/assets/img/logo.png" />
     </div>
     <div class="header-right">
-      <el-space class="right-top" spacer="/"
-        ><router-link to="/login">Login</router-link
-        ><router-link to="/register">Register</router-link></el-space
+      <el-space v-if="!props?.user?.userInfo?.userName" class="right-top" spacer="/"
+        ><router-link to="/login">Login</router-link><router-link to="/register">Register</router-link></el-space
+      >
+      <el-space v-else class="right-top" spacer="/"
+        ><span class="account"
+          ><img class="account-img" src="@/assets/img/account.png" /><span>{{
+            props?.user?.userInfo?.userName
+          }}</span></span
+        ><span>Logout</span></el-space
       >
       <div class="right-bottom">
         <ul class="header-nav-wrapper">
@@ -18,18 +24,11 @@
           >
             <router-link :to="item.path">
               {{ item.name }}
-              <span
-                v-if="item.children.length > 0"
-                class="glyphicon glyphicon-menu-down"
-              ></span>
+              <span v-if="item.children.length > 0" class="glyphicon glyphicon-menu-down"></span>
               <i class="underline"></i>
             </router-link>
             <dl v-if="item.children.length > 0">
-              <router-link
-                :to="i.path"
-                v-for="(i, n) in item.children"
-                :key="n"
-              >
+              <router-link :to="i.path" v-for="(i, n) in item.children" :key="n">
                 <dt>{{ i.name }}</dt></router-link
               >
             </dl>
@@ -42,7 +41,16 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { ref, reactive, watchEffect } from 'vue'
+import { defineProps, ref, reactive, watchEffect } from 'vue'
+
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+console.log(props.user, 'user')
 
 const phone = import.meta.env.VITE_APP_PHONE
 const email = import.meta.env.VITE_APP_EMAIL
@@ -107,9 +115,9 @@ const navList = [
 
 watchEffect(() => {
   navIndex.value = navList.findIndex((item) => {
-    console.log(route.path.split('/'), item.path, 'ppp')
     return route.path.split('/').includes(item.path.slice(1))
   })
+  console.log(navIndex.value, 'navIndex.value')
 })
 
 function navClick(index, name) {
@@ -150,6 +158,14 @@ function menuClick() {
       }
     }
   }
+  .account {
+    display: flex;
+    .account-img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
 }
 
 /* 导航栏 导航容器 */
@@ -184,6 +200,7 @@ function menuClick() {
   // font-weight: bold;
   padding: 15px 0;
   position: relative;
+  // top: -4px;
 }
 
 /* 导航栏 每个导航下面的 a 链接的下划线 */
@@ -225,8 +242,8 @@ function menuClick() {
 
 /* 导航栏 每个导航下面的 a 链接 鼠标点击后的样式 */
 .header-nav-wrapper > li.active > a {
-  color: #fff;
   text-decoration: none;
+  color: #fff;
   border-bottom: 2px solid #fff;
 }
 

@@ -1,114 +1,101 @@
 <template>
-  <div class="data-resource-list">
-    <div>
-      <div class="handle-box">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-input v-model="query.mineral" placeholder="Mineral" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-input v-model="query.chemistry" placeholder="Chemistry" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-input v-model="query.chemicalFormula" placeholder="ChemicalFormula" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-select v-model="query.source" placeholder="Source" class="handle-select mr10">
-              <el-option
-                v-for="item in SourceData"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              /> </el-select
-          ></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-input v-model="query.mineral" placeholder="Mineral" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-input v-model="query.chemistry" placeholder="Chemistry" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-input v-model="query.chemicalFormula" placeholder="ChemicalFormula" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6"> <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button></el-col>
-        </el-row>
+  <div class="data-resource-detail text-center">
+    <h3 class="text-center">Data Resources Detail</h3>
+    <div class="content">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div class="chart-card">
+            <p class="chart-title">Hematite_EELS _Fe LL Spectrum</p>
+            <div class="chart"><ZoomLineChart /></div>
+            <div class="download-wrap">
+              <a href="">Hematite_EELS _Fe LL Spectrum.msa</a>
+              <a href="">Hematite_EELS _Fe LL Spectrum.dm4</a>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="chart-card">
+            <p class="chart-title">Hematite_EELS _Fe HL Spectrum</p>
+            <div class="chart"><ZoomLineChart /></div>
+            <div class="download-wrap">
+              <a href="">Hematite_EELS _Fe HL Spectrum.msa</a>
+              <a href="">Hematite_EELS _Fe HL Spectrum.dm4</a>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="content-table-wrap">
+      <div class="content-table">
+        <el-table :data="tableGeneralData" style="width: 100%" align="center">
+          <el-table-column label="General">
+            <el-table-column prop="element" label="Element" />
+            <el-table-column prop="formula" label="Formula" />
+            <el-table-column prop="mineralName" label="Mineral Name" />
+          </el-table-column>
+        </el-table>
       </div>
-      <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-        <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-        <el-table-column prop="name" label="用户名"></el-table-column>
-        <el-table-column label="账户余额">
-          <template #default="scope">￥{{ scope.row.money }}</template>
-        </el-table-column>
-        <el-table-column label="头像(查看大图)" align="center">
-          <template #default="scope">
-            <el-image
-              class="table-td-thumb"
-              :src="scope.row.thumb"
-              :z-index="10"
-              :preview-src-list="[scope.row.thumb]"
-              preview-teleported
-            >
-            </el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column label="状态" align="center">
-          <template #default="scope">
-            <el-tag :type="scope.row.state === '成功' ? 'success' : scope.row.state === '失败' ? 'danger' : ''">
-              {{ scope.row.state }}
-            </el-tag>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="date" label="注册时间"></el-table-column>
-        <el-table-column label="操作" width="220" align="center">
-          <template #default="scope">
-            <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-permiss="15"> 编辑 </el-button>
-            <el-button text :icon="Delete" class="red" @click="handleDelete(scope.$index)" v-permiss="16">
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination">
-        <el-pagination
-          background
-          layout="total, prev, pager, next"
-          :current-page="query.pageIndex"
-          :page-size="query.pageSize"
-          :total="pageTotal"
-          @current-change="handlePageChange"
-        ></el-pagination>
+      <div class="content-table">
+        <el-table :data="tableGeneralData2" style="width: 100%">
+          <el-table-column label="Specimen Information">
+            <el-table-column prop="specimenType" label="Specimen Type" />
+            <el-table-column prop="relativeThickness" label="Relative Thickness(t/)" />
+          </el-table-column>
+          <el-table-column label="Data">
+            <el-table-column prop="bandgapEnergy" label="Bandgap Energy(eV)" />
+            <el-table-column prop="plasmonEnergy" label="Plasmon Energy(eV)" />
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="content-table text-center">
+        <el-table :data="tableGeneralData3" style="width: 100%">
+          <el-table-column label="Equipment Information">
+            <el-table-column prop="microscopeName" label="Microscope Name/Model" />
+            <el-table-column prop="gunType" label="Gun Type" />
+            <el-table-column prop="detector" label="Detector" />
+            <el-table-column prop="acquisitionMode" label="Acquisition Mode" />
+            <el-table-column prop="convergence" label="Convergence Semi-angle" />
+            <el-table-column prop="collection" label="Collection Semi-angle" />
+            <el-table-column prop="probeSize" label="Probe Size(nm)" />
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="content-table text-center">
+        <el-table :data="tableGeneralData4" style="width: 100%">
+          <el-table-column label="Spectrum Information">
+            <el-table-column prop="microscopeName" label="Microscope Name/Model" />
+            <el-table-column prop="gunType" label="Gun Type" />
+            <el-table-column prop="detector" label="Detector" />
+            <el-table-column prop="acquisitionMode" label="Acquisition Mode" />
+            <el-table-column prop="convergence" label="Convergence Semi-angle" />
+            <el-table-column prop="collection" label="Collection Semi-angle" />
+            <el-table-column prop="probeSize" label="Probe Size(nm)" />
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="content-table text-center">
+        <el-table :data="tableGeneralData5" style="width: 100%">
+          <el-table-column label="citation">
+            <el-table-column prop="microscopeName" label="Microscope Name/Model" />
+            <el-table-column prop="gunType" label="Gun Type" />
+            <el-table-column prop="detector" label="Detector" />
+            <el-table-column prop="acquisitionMode" label="Acquisition Mode" />
+            <el-table-column prop="convergence" label="Convergence Semi-angle" />
+            <el-table-column prop="collection" label="Collection Semi-angle" />
+            <el-table-column prop="probeSize" label="Probe Size(nm)" />
+          </el-table-column>
+        </el-table>
       </div>
     </div>
-
-    <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible" width="30%">
-      <el-form label-width="70px">
-        <el-form-item label="用户名">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="form.address"></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="editVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveEdit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts" name="basetable">
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
+import ZoomLineChart from './components/ZoomLineChart.vue'
 import { SourceData } from '@/constants/options'
+import { tableGeneralData, tableGeneralData2, tableGeneralData3, tableGeneralData4, tableGeneralData5 } from './lineData'
 // import { fetchData } from '../api/index'
 
 const query = reactive({
@@ -180,41 +167,60 @@ const saveEdit = () => {
 </script>
 
 <style lang="less" scoped>
-.data-resource-list {
+.data-resource-detail {
   min-height: @page-content-min-height;
-  padding: 50px;
+  padding: 20px;
   overflow: hidden;
 }
 
-.handle-box {
+h3 {
+  color: @color-secondary;
+}
+
+.content {
+  padding: 20px 0;
   margin-bottom: 20px;
-  .el-row {
-    margin-bottom: 20px;
+  .chart-card {
+    .chart-title {
+      color: @color-secondary;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .chart {
+      border: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .download-wrap {
+      display: flex;
+      a {
+        color: #12c2ff;
+        flex: 1;
+        font-weight: bold;
+      }
+    }
   }
 }
-
-.handle-input,
-.handle-select {
-  width: 100%;
-}
-
-.table {
-  width: 100%;
-  font-size: 14px;
-  thead {
-    background-color: @color-secondary;
+.content-table-wrap {
+  margin-bottom: 50px;
+  .content-table {
+    margin-bottom: 10px;
+    :deep(table) {
+      thead {
+        tr:first-child {
+          th {
+            background-color: @color-secondary;
+            color: #fff;
+          }
+        }
+      }
+      th,
+      td {
+        padding: 0;
+        text-align: center;
+        color: #000;
+      }
+    }
   }
-}
-.red {
-  color: #f56c6c;
-}
-.mr10 {
-  margin-right: 10px;
-}
-.table-td-thumb {
-  display: block;
-  margin: auto;
-  width: 40px;
-  height: 40px;
 }
 </style>

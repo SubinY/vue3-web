@@ -2,19 +2,22 @@ import { ref, reactive, onMounted } from 'vue'
 import * as API from '@/apis/data-resources'
 
 export default function useListFetch() {
-  const list = reactive([])
+  const tableData = ref([])
+  const pageTotal = ref(0)
 
   const fetch = async (params = {}) => {
-    console.log(await API.list({}))
+    const { list } = await API.list({})
+    tableData.value = list
+    pageTotal.value = list?.length
   }
 
   onMounted(() => {
     fetch()
-    console.log('onMounted')
   })
 
   return {
-    list,
+    tableData,
+    pageTotal,
     fetch
   }
 }

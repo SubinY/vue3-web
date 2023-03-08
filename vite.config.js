@@ -3,24 +3,21 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import Components from 'unplugin-vue-components/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+// import Components from 'unplugin-vue-components/vite'
+// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/',
   plugins: [
-    vue(),
-    Components({
-      resolvers: [AntDesignVueResolver()],
-    }),
+    // Components({
+    //   resolvers: [AntDesignVueResolver()]
+    // }),
     inject({
       $: 'jquery', // 这里会自动载入 node_modules 中的 jquery
       jQuery: 'jquery',
       'windows.jQuery': 'jquery',
-      BMap: 'BMap',
-      ElementPlus: 'ElementPlus',
-
+      ElementPlus: 'ElementPlus'
     }),
     createHtmlPlugin({
       /**
@@ -32,7 +29,8 @@ export default defineConfig({
           VITE_APP_VERSION: new Date().toLocaleString()
         }
       }
-    })
+    }),
+    vue()
   ],
   resolve: {
     alias: {
@@ -45,9 +43,7 @@ export default defineConfig({
         modifyVars: {
           // 用于全局导入，以避免需要单独导入每个样式文件。
           // reference:  避免重复引用
-          hack: `true; @import (reference) "${resolve(
-            'src/style/index.less'
-          )}";`
+          hack: `true; @import (reference) "${resolve('src/style/index.less')}";`
           // ↓这行代码下一章讲
           // ...generateModifyVars(),
         },
@@ -56,4 +52,3 @@ export default defineConfig({
     }
   }
 })
-
