@@ -3,6 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
+import visualizer from 'rollup-plugin-visualizer'
 // import Components from 'unplugin-vue-components/vite'
 // import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
@@ -30,7 +31,8 @@ export default defineConfig({
         }
       }
     }),
-    vue()
+    vue(),
+    visualizer({ open: true })
   ],
   resolve: {
     alias: {

@@ -3,11 +3,7 @@
     <table>
       <tbody>
         <tr v-for="(row, index) in tags" :key="index">
-          <td
-            v-for="(col, nums) in row"
-            :key="nums"
-            :style="col.symbol && { border: '1px solid #ccc' }"
-          >
+          <td v-for="(col, nums) in row" :key="nums" :style="col.symbol && { border: '1px solid #ccc' }">
             <div
               :class="data.includes(col.symbol) && 'actived'"
               class="elements"
@@ -115,6 +111,14 @@ td {
     flex-direction: column;
     > p {
       margin: 0;
+    }
+    p:first-child {
+      transform: scale(0.8);
+    }
+    p:last-child {
+      font-size: 14px;
+      position: relative;
+      top: -2px;
     }
   }
   &.actived {

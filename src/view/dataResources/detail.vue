@@ -90,12 +90,18 @@
   </div>
 </template>
 
-<script setup lang="ts" name="basetable">
+<script setup name="basetable">
 import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import ZoomLineChart from './components/ZoomLineChart.vue'
 import { SourceData } from '@/constants/options'
-import { tableGeneralData, tableGeneralData2, tableGeneralData3, tableGeneralData4, tableGeneralData5 } from './lineData'
+import {
+  tableGeneralData,
+  tableGeneralData2,
+  tableGeneralData3,
+  tableGeneralData4,
+  tableGeneralData5
+} from './lineData'
 // import { fetchData } from '../api/index'
 
 const query = reactive({
@@ -127,13 +133,13 @@ const handleSearch = () => {
   getData()
 }
 // 分页导航
-const handlePageChange = (val: number) => {
+const handlePageChange = (val) => {
   query.pageIndex = val
   getData()
 }
 
 // 删除操作
-const handleDelete = (index: number) => {
+const handleDelete = (index) => {
   // 二次确认删除
   ElMessageBox.confirm('确定要删除吗？', '提示', {
     type: 'warning'
@@ -151,8 +157,8 @@ let form = reactive({
   name: '',
   address: ''
 })
-let idx: number = -1
-const handleEdit = (index: number, row: any) => {
+let idx = -1
+const handleEdit = (index, row) => {
   idx = index
   form.name = row.name
   form.address = row.address

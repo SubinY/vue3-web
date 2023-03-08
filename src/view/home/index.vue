@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page text-center">
+  <div class="home-page">
     <h4>Welcome to the MEELS GIG Project website</h4>
     <h4 class="second-h4">Search MEELS GIG Data</h4>
     <el-form
@@ -150,6 +150,7 @@ function handleClear() {
 /* 整体盒子 */
 .home-page {
   .page-container;
+  text-align: center;
 }
 h4 {
   margin-bottom: 40px;

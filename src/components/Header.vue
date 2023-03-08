@@ -24,7 +24,10 @@
           >
             <router-link :to="item.path">
               {{ item.name }}
-              <span v-if="item.children.length > 0" class="glyphicon glyphicon-menu-down"></span>
+              <span
+                ><el-icon v-if="item.children.length > 0"><ArrowDownBold /></el-icon
+              ></span>
+              <!-- <span v-if="item.children.length > 0" class="glyphicon glyphicon-menu-down"></span> -->
               <i class="underline"></i>
             </router-link>
             <dl v-if="item.children.length > 0">
@@ -177,6 +180,8 @@ function menuClick() {
   float: right;
   margin: 0;
   max-width: 800px;
+  position: relative;
+  top: -1px;
 }
 
 /* 导航栏 每个导航 */
@@ -217,7 +222,7 @@ function menuClick() {
 }
 
 /* 导航栏 每个导航下面的 a 链接的右侧小三角 */
-.header-nav-wrapper > li > a > span {
+.header-nav-wrapper > li > a > span > i {
   font-size: 12px;
   transition: transform ease 0.5s;
 }
@@ -236,7 +241,7 @@ function menuClick() {
 }
 
 /* 导航栏 每个导航下面的 a 链接 鼠标滑上去三角标的样式 */
-.header-nav-wrapper > li > a:hover span {
+.header-nav-wrapper > li > a:hover span > i {
   transform: rotate(180deg);
 }
 
@@ -244,7 +249,7 @@ function menuClick() {
 .header-nav-wrapper > li.active > a {
   text-decoration: none;
   color: #fff;
-  border-bottom: 2px solid #fff;
+  border-bottom: 3px solid #fff;
 }
 
 /* 导航栏 每个导航下面的二级导航容器 */

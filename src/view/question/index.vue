@@ -1,45 +1,23 @@
 <template>
   <div class="question-page text-center">
     <h3>We look forward to your suggestions to make us better</h3>
-    <el-form
-      ref="ruleFormRef"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="0"
-      class="form center-block"
-    >
+    <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="0" class="form center-block">
       <el-form-item label="About You" prop="aboutYou">
         <el-input v-model="ruleForm.aboutYou" />
       </el-form-item>
       <el-form-item label="Question Category" prop="questionCategory">
         <el-select v-model="ruleForm.questionCategory" placeholder="Select">
-          <el-option
-            v-for="item in quesCategory"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in quesCategory" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="Question Description" prop="questionDescription">
-        <el-input
-          type="textarea"
-          :rows="5"
-          v-model="ruleForm.questionDescription"
-          resize="none"
-        />
+        <el-input type="textarea" :rows="5" v-model="ruleForm.questionDescription" resize="none" />
       </el-form-item>
       <el-form-item label="Your Email" prop="email">
         <el-input v-model="ruleForm.email" />
       </el-form-item>
       <el-form-item class="form-footer">
-        <el-button
-          style="margin-right: 160px"
-          type="primary"
-          @click="submitForm(ruleFormRef)"
-          >Login</el-button
-        >
+        <el-button style="margin-right: 160px" type="primary" @click="submitForm(ruleFormRef)">Submit</el-button>
         <el-button @click="resetForm(ruleFormRef)">Cancel</el-button>
       </el-form-item>
     </el-form>

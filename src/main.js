@@ -4,21 +4,11 @@ import store from '@/store'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import './style/element-variables.less'
 
-/* swiper */
-// import 'swiper/swiper.min.css'
+// import './assets/css/bootstrap.min.css'
+// import './assets/js/bootstrap.min.js'
 
-/* 重置样式 */
-import './assets/css/reset.min.css'
-
-// import 'jquery'
-
-import './assets/css/bootstrap.min.css'
-import './assets/js/bootstrap.min.js'
-
-/* animate.css */
-import 'wow.js/css/libs/animate.css'
+import './style/index.less'
 
 import App from './App.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'

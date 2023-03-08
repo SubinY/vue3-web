@@ -5,7 +5,6 @@ import globalTips from './globalTips'
 import path from 'path'
 import pathToRegexp from 'path-to-regexp'
 import querystring from 'querystring'
-import { Modal } from 'ant-design-vue';
 
 const GLOBAL_ERROR = {
   40006: {

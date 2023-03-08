@@ -80,12 +80,12 @@
   </div>
 </template>
 
-<script setup lang="ts" name="basetable">
+<script setup name="DataResourcesList">
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
-import { SourceData } from '@/constants/options'
+import { SourceData } from '@/constants//options'
 import useListFetch from './useListFetch.js'
 // import { fetchData } from '../api/index'
 
@@ -109,7 +109,7 @@ const handleSearch = () => {
   fetch()
 }
 // 分页导航
-const handlePageChange = (val: number) => {
+const handlePageChange = (val) => {
   query.pageIndex = val
   fetch()
 }
@@ -120,8 +120,8 @@ let form = reactive({
   name: '',
   address: ''
 })
-let idx: number = -1
-const handleCheck = (index: number, row: any) => {
+let idx = -1
+const handleCheck = (index, row) => {
   router.push({
     path: '/data-resources/detail',
     query: {
