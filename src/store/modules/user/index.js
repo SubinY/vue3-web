@@ -28,7 +28,7 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     userProfile(state) {
-      return { ...state }
+      return state.userInfo
     }
   },
   actions: {
@@ -55,7 +55,8 @@ export const useUserStore = defineStore('user', {
           userName: 'admin',
           userId: 1
         }
-        return (this.userInfo = userInfo)
+        this.userInfo = userInfo
+        return
       }
       this.resetInfo()
     },
@@ -63,6 +64,7 @@ export const useUserStore = defineStore('user', {
     async login(loginForm) {
       const ex = 7 * 24 * 60 * 60 * 1000
       Storage.set(ACCESS_TOKEN_KEY, 'Bearer token', ex)
+      this.getUserInfo()
       // const result = await userLogin(loginForm)
       // const token = result?.token
       // if (token) {

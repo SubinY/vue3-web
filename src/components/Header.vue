@@ -4,15 +4,15 @@
       <img class="logo" src="@/assets/img/logo.png" />
     </div>
     <div class="header-right">
-      <el-space v-if="!props?.user?.userInfo?.userName" class="right-top" spacer="/"
+      <el-space v-if="!userStore?.userInfo?.userName" class="right-top" spacer="/"
         ><router-link to="/login">Login</router-link><router-link to="/register">Register</router-link></el-space
       >
       <el-space v-else class="right-top" spacer="/"
         ><span class="account"
           ><img class="account-img" src="@/assets/img/account.png" /><span>{{
-            props?.user?.userInfo?.userName
+            userStore?.userInfo?.userName
           }}</span></span
-        ><span>Logout</span></el-space
+        ><a @click="handleLogout">Logout</a></el-space
       >
       <div class="right-bottom">
         <ul class="header-nav-wrapper">
@@ -45,15 +45,11 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { defineProps, ref, reactive, watchEffect } from 'vue'
+import { useUserStore } from '@/store/modules/user'
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => ({})
-  }
-})
+const userStore = useUserStore()
 
-console.log(props.user, 'user')
+console.log(userStore.userProfile.userName, 'userStore')
 
 const phone = import.meta.env.VITE_APP_PHONE
 const email = import.meta.env.VITE_APP_EMAIL
@@ -68,20 +64,6 @@ const navList = [
     path: '/home',
     children: []
   },
-  // {
-  //   name: '软件产品',
-  //   path: '/software',
-  //   children: [
-  //     {
-  //       name: '智能小镇管理系统',
-  //       path: '/software/smartTown'
-  //     },
-  //     {
-  //       name: '大数据管理系统',
-  //       path: '/software/bigData'
-  //     }
-  //   ]
-  // },
   {
     name: 'Data Resources',
     path: '/data-resources',
@@ -120,19 +102,15 @@ watchEffect(() => {
   navIndex.value = navList.findIndex((item) => {
     return route.path.split('/').includes(item.path.slice(1))
   })
-  console.log(navIndex.value, 'navIndex.value')
 })
 
 function navClick(index, name) {
   navIndex.value = index
   menuName.value = name
 }
-function menuClick() {
-  if (menuClass.value === 'glyphicon glyphicon-menu-down') {
-    menuClass.value = 'glyphicon glyphicon-menu-up'
-  } else {
-    menuClass.value = 'glyphicon glyphicon-menu-down'
-  }
+
+function handleLogout() {
+  userStore.logout()
 }
 </script>
 
