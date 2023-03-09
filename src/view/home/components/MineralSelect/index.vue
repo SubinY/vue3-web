@@ -35,7 +35,7 @@
 <script setup>
 import { ref, reactive, computed, watch, watchEffect, getCurrentInstance, defineProps, defineEmits } from 'vue'
 import { MineralData } from '@/constants/options'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { calcList } from './util'
 
 const props = defineProps({

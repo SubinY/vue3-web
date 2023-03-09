@@ -2,7 +2,9 @@
   <Header :user="userStore"></Header>
   <!-- 路由出口 -->
   <!-- 路由匹配到的组件将渲染在这里 -->
-  <router-view></router-view>
+  <div class="page-container">
+    <router-view></router-view>
+  </div>
   <Footer></Footer>
   <!-- <GoTop></GoTop> -->
 </template>

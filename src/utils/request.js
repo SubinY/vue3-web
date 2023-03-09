@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { curry, omit } from 'lodash'
+import curry from 'lodash/curry'
+import omit from 'lodash/omit'
 import { ApiBaseName } from '../constants/api'
 import globalTips from './globalTips'
 import path from 'path'

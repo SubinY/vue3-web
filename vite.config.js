@@ -4,16 +4,21 @@ import vue from '@vitejs/plugin-vue'
 import inject from '@rollup/plugin-inject'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import visualizer from 'rollup-plugin-visualizer'
-// import Components from 'unplugin-vue-components/vite'
-// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/',
   plugins: [
-    // Components({
-    //   resolvers: [AntDesignVueResolver()]
-    // }),
+    Components({
+      resolvers: [ElementPlusResolver(), AntDesignVueResolver()]
+    }),
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
     inject({
       $: 'jquery', // 这里会自动载入 node_modules 中的 jquery
       jQuery: 'jquery',
@@ -32,8 +37,23 @@ export default defineConfig({
       }
     }),
     vue(),
-    visualizer({ open: true })
+    // visualizer({ open: true })
   ],
+  build: {
+    reportCompressedSize: true, // 启用/禁用 gzip 压缩大小报告
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'static/js/[name]-[hash].js',
+        entryFileNames: 'static/js/[name]-[hash].js',
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+      },
+      // manualChunks(id) {
+      //   if (id.includes('node_modules')) {
+      //     return id.toString().split('node_modules/')[1].split('/')[0].toString()
+      //   }
+      // }
+    },
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src')

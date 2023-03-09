@@ -1,5 +1,5 @@
 import { computed, getCurrentInstance, ref, onBeforeUnmount } from 'vue'
-import { debounce } from 'lodash-es'
+import debounce from 'lodash/debounce'
 
 export const useResize = (callback, waitTime = 100) => {
   
