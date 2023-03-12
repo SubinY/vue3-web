@@ -110,7 +110,7 @@ function handleClear() {
 }
 
 function emptySearch() {
-  return ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+  return ElMessageBox.confirm('Please select at least one query condition', 'ATTENTION!', {
     confirmButtonText: 'OK',
     showCancelButton: false,
     type: 'warning',

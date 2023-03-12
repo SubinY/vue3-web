@@ -24,11 +24,29 @@
         </tr>
       </tbody>
     </table>
+    <table class="disable-table">
+      <tbody>
+        <tr v-for="(row, index) in disabledTags" :key="index">
+          <td v-for="(col, nums) in row" :key="nums" :style="col.symbol && { border: '1px solid #ccc' }">
+            <div :style="{ background: '#ccc', cursor: 'not-allowed' }" class="elements" v-if="col.symbol">
+              <div class="element">
+                <p>
+                  {{ col.id }}
+                </p>
+                <p>
+                  {{ col.symbol }}
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script setup>
-import { tags } from './tags'
+import { tags, disabledTags } from './tags'
 import { colorInfo } from './color'
 import { defineProps, defineEmits, reactive, watchEffect, computed } from 'vue'
 
@@ -86,10 +104,14 @@ table {
   margin: 0 auto;
 }
 
+.disable-table {
+  margin-top: 20px;
+}
+
 th,
 td {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   // padding: 0.02rem;
 }
 
@@ -99,8 +121,8 @@ td {
   cursor: pointer;
   display: block;
   font-size: 0.6rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   // line-height: 3.5rem;
   margin: 0;
   padding: 0;
