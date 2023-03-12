@@ -17,7 +17,7 @@
         <el-input v-model="ruleForm.chemicalFormula" placeholder="ChemicalFormula" />
       </el-form-item>
       <el-form-item label="Source" prop="source">
-        <el-select v-model="ruleForm.source" filterable placeholder="Source">
+        <el-select v-model="ruleForm.source" multiple filterable placeholder="Source">
           <el-option v-for="item in SourceData" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
