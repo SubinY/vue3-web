@@ -4,34 +4,38 @@
       <div class="handle-box">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-input v-model="query.mineral" placeholder="Mineral" class="handle-input mr10"></el-input
-          ></el-col>
+            <el-select v-model="query.mineral" placeholder="Mineral" multiple filterable class="handle-select mr10">
+              <el-option-group v-for="group in MineralData" :key="group.label" :label="group.label">
+                <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value" />
+              </el-option-group>
+            </el-select>
+          </el-col>
           <el-col :span="6">
-            <el-input v-model="query.chemistry" placeholder="Chemistry" class="handle-input mr10"></el-input
-          ></el-col>
+            <el-select v-model="query.chemistry" placeholder="Chemistry" multiple filterable class="handle-select mr10">
+              <el-option v-for="item in PeriodicTags" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-col>
           <el-col :span="6">
             <el-input v-model="query.chemicalFormula" placeholder="ChemicalFormula" class="handle-input mr10"></el-input
           ></el-col>
           <el-col :span="6">
-            <el-select v-model="query.source" placeholder="Source" class="handle-select mr10">
-              <el-option
-                v-for="item in SourceData"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              /> </el-select
-          ></el-col>
+            <el-select v-model="query.source" placeholder="Source" multiple filterable class="handle-select mr10">
+              <el-option v-for="item in SourceData" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-input v-model="query.mineral" placeholder="Mineral" class="handle-input mr10"></el-input
-          ></el-col>
+            <el-select v-model="query.specimenType" filterable placeholder="Specimen Type" class="handle-select mr10">
+              <el-option label="FIB" value="FIB" />
+              <el-option label="Powder" value="Powder" />
+            </el-select>
+          </el-col>
           <el-col :span="6">
-            <el-input v-model="query.chemistry" placeholder="Chemistry" class="handle-input mr10"></el-input
-          ></el-col>
-          <el-col :span="6">
-            <el-input v-model="query.chemicalFormula" placeholder="ChemicalFormula" class="handle-input mr10"></el-input
-          ></el-col>
+            <el-select v-model="query.edge" placeholder="Edge" multiple class="handle-select mr10">
+              <el-option label="K" value="K" />
+            </el-select>
+          </el-col>
           <el-col :span="6"> <el-button type="primary" :icon="Search" @click="handleSearch">Search</el-button></el-col>
         </el-row>
       </div>
@@ -40,11 +44,13 @@
         <el-table-column prop="chemistry" label="Chemistry"></el-table-column>
         <el-table-column prop="chemicalFormula" label="Chemical Formula"></el-table-column>
         <el-table-column prop="source" label="Source"> </el-table-column>
-        <el-table-column prop="status" label="Sample Status"></el-table-column>
+        <el-table-column prop="chemicalFormula" label="Chemical Formula"></el-table-column>
         <el-table-column prop="edge" label="Edge"></el-table-column>
         <el-table-column label="More Detail" width="100">
           <template #default="scope">
-            <el-button text @click="handleCheck(scope.$index, scope.row)" v-permiss="15"> Check </el-button>
+            <el-button type="primary" text @click="handleClick(scope.$index, scope.row)" v-permiss="15">
+              Click
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,9 +91,15 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue'
-import { SourceData } from '@/constants//options'
+import { SourceData, MineralData } from '@/constants/options'
+import { tags } from '@/components/PeriodicTable/tags'
 import useListFetch from './useListFetch.js'
+import flatten from 'lodash/flatten'
 // import { fetchData } from '../api/index'
+
+const PeriodicTags = flatten(tags)
+  .map((tag) => ({ label: tag.symbol, value: tag.symbol }))
+  .filter((item) => item.label)
 
 const router = useRouter()
 const { tableData, pageTotal, fetch } = useListFetch()
@@ -95,8 +107,8 @@ const query = reactive({
   mineral: [],
   chemistry: [],
   chemicalFormula: '',
-  source: '',
-  status: '',
+  source: [],
+  specimenType: [],
   edge: '',
   type: '',
   pageIndex: 1,
@@ -121,7 +133,7 @@ let form = reactive({
   address: ''
 })
 let idx = -1
-const handleCheck = (index, row) => {
+const handleClick = (index, row) => {
   router.push({
     path: '/data-resources/detail',
     query: {

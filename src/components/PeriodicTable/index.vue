@@ -5,7 +5,8 @@
         <tr v-for="(row, index) in tags" :key="index">
           <td v-for="(col, nums) in row" :key="nums" :style="col.symbol && { border: '1px solid #ccc' }">
             <div
-              :class="data.includes(col.symbol) && 'actived'"
+              :style="col.class === 'disabled' && { background: '#ccc', cursor: 'not-allowed' }"
+              :class="data.includes(col.symbol) && col.class !== 'disabled' && 'actived'"
               class="elements"
               v-if="col.symbol"
               @click="() => handleSelect(col)"
@@ -29,7 +30,7 @@
 <script setup>
 import { tags } from './tags'
 import { colorInfo } from './color'
-import { defineProps, defineEmits, reactive, watchEffect } from 'vue'
+import { defineProps, defineEmits, reactive, watchEffect, computed } from 'vue'
 
 const props = defineProps({
   modelValue: []
@@ -44,7 +45,8 @@ watchEffect(() => {
 const emit = defineEmits(['update:modelValue'])
 
 function handleSelect(v) {
-  const { symbol } = v
+  const { symbol, class: classStyle } = v
+  if (classStyle === 'disabled') return
   if (data.includes(symbol)) {
     data.splice(data.indexOf(symbol), 1)
     emit('update:modelValue', data)

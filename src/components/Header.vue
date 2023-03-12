@@ -124,7 +124,8 @@ function handleLogout() {
     width: 300px;
     img {
       position: relative;
-      height: 100%;
+      height: 80px;
+      top: -10px;
     }
   }
   .header-right {

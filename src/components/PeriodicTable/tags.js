@@ -3,24 +3,13 @@
  * name: 文件名称
  * mdnurl: 基本描述
  * w3curl: 参考链接
- * class: 分类,通过空格分隔 hmtl5 removed (跟，嵌入，表单等等) 闭合|非闭合closed 块级|内联 blocked
- */
-/**
-根元素：rootval   1
-表单元素： formval   15
-表格元素:  tableval  10
-元数据脚本：metascriptval  8
-嵌入：embedval  12
-文本语义：textval 28
-分组：groupval  14
-文档内容： documentval  15
-互动：interactiveval  4
+ * class: 分类
  */
 
 /**
  * 名称 name
  * 符号 symbol
- * 分类 class
+ * 分类 class (disabled: 禁用)
  * 质量 weight
  * id
  */
@@ -474,14 +463,14 @@ export const tags = [
         name: '',
         symbol: 'La',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 60,
         name: '',
         symbol: 'Ce',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
     ],
     [
@@ -490,91 +479,91 @@ export const tags = [
         name: '',
         symbol: 'Pr',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 66,
         name: '',
         symbol: 'Nd',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 63,
         name: '',
         symbol: 'Pm',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 64,
         name: '',
         symbol: 'Sm',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 65,
         name: '',
         symbol: 'Eu',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 66,
         name: '',
         symbol: 'Gd',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 67,
         name: '',
         symbol: 'Tb',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 68,
         name: '',
         symbol: 'Dy',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 69,
         name: '',
         symbol: 'Ho',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 70,
         name: '',
         symbol: 'Er',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 71,
         name: '',
         symbol: 'Tm',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 72,
         name: '',
         symbol: 'Yb',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 73,
         name: '',
         symbol: 'Lu',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 74,
@@ -702,70 +691,70 @@ export const tags = [
         name: '',
         symbol: 'Ac',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 92,
         name: '',
         symbol: 'Th',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 93,
         name: '',
         symbol: 'Pa',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 94,
         name: '',
         symbol: 'U',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 95,
         name: '',
         symbol: 'Np',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 96,
         name: '',
         symbol: 'Pu',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 97,
         name: '',
         symbol: 'Am',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 98,
         name: '',
         symbol: 'Cm',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 99,
         name: '',
         symbol: 'Bk',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 100,
         name: '',
         symbol: 'Cf',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
     ],
     [
@@ -774,35 +763,35 @@ export const tags = [
         name: '',
         symbol: 'Es',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 102,
         name: '',
         symbol: 'Fm',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 103,
         name: '',
         symbol: 'Md',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 104,
         name: '',
         symbol: 'No',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 105,
         name: '',
         symbol: 'Lr',
         weight: '',
-        class: ''
+        class: 'disabled'
       },
       {
         id: 106,

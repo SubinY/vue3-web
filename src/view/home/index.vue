@@ -1,69 +1,29 @@
 <template>
   <div class="home-page text-center">
-    <h4>Welcome to the MEELS GIG Project website</h4>
-    <h4 class="second-h4">Search MEELS GIG Data</h4>
-    <el-form
-      ref="ruleFormRef"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="0"
-      class="form center-block"
-    >
+    <h4>Welcome to the MEELS GIG Atlas Project website</h4>
+    <h4 class="second-h4">Search MEELS Data</h4>
+    <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="0" class="form center-block">
       <el-form-item label="Mineral" prop="mineral">
         <MineralSelect v-model="ruleForm.mineral" />
       </el-form-item>
-      <el-form-item
-        class="chemistry-form-item"
-        label="Chemistry"
-        prop="chemistry"
-      >
-        <el-input
-          :value="ruleForm.chemistry"
-          placeholder="Chemistry"
-          readonly
-        />
-        <el-icon
-          v-if="ruleForm.chemistry?.length"
-          class="mineral-select-close"
-          @click.stop="handleClear"
+      <el-form-item class="chemistry-form-item" label="Chemistry" prop="chemistry">
+        <el-input :value="ruleForm.chemistry" placeholder="Chemistry" readonly />
+        <el-icon v-if="ruleForm.chemistry?.length" class="mineral-select-close" @click.stop="handleClear"
           ><CircleClose
         /></el-icon>
-        <el-button
-          class="chemistrys-select"
-          type="primary"
-          @click="isPeriodicShow = !isPeriodicShow"
-          >Select</el-button
-        >
+        <el-button class="chemistrys-select" type="primary" @click="isPeriodicShow = !isPeriodicShow">Select</el-button>
       </el-form-item>
       <el-form-item label="ChemicalFormula" prop="chemicalFormula">
-        <el-input
-          v-model="ruleForm.chemicalFormula"
-          placeholder="ChemicalFormula"
-        />
+        <el-input v-model="ruleForm.chemicalFormula" placeholder="ChemicalFormula" />
       </el-form-item>
       <el-form-item label="Source" prop="source">
-        <el-select v-model="ruleForm.source" placeholder="Source">
-          <el-option
-            v-for="item in SourceData"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="ruleForm.source" filterable placeholder="Source">
+          <el-option v-for="item in SourceData" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
       <el-form-item class="form-footer">
-        <el-button
-          style="margin-right: 160px"
-          type="primary"
-          @click="handleSubmit(ruleFormRef)"
-          >Search</el-button
-        >
-        <el-button
-          style="background-color: #ddd; color: #888"
-          @click="handleReset(ruleFormRef)"
-          >Reset</el-button
-        >
+        <el-button style="margin-right: 160px" type="primary" @click="handleSubmit(ruleFormRef)">Search</el-button>
+        <el-button style="background-color: #ddd; color: #888" @click="handleReset(ruleFormRef)">Reset</el-button>
       </el-form-item>
     </el-form>
     <PeriodicTable v-if="isPeriodicShow" v-model="ruleForm.chemistry" />
@@ -76,37 +36,34 @@
       rhoncus pronin sapien nunc accuan eget.
     </p> -->
     <div class="card-wrap center-block">
-      <a target="_blank" href="https://rruff.info/#"
-        ><img src="/src/assets/img/EELS1.gif"
-      /></a>
-      <a target="_blank" href="https://eelsdb.eu/"
-        ><img src="/src/assets/img/EELS2.png"
-      /></a>
-      <a target="_blank" href="https://eels.info/"
-        ><img src="/src/assets/img/EELS3.png"
-      /></a>
+      <a target="_blank" href="https://rruff.info/#"><img src="/src/assets/img/EELS1.gif" /></a>
+      <a target="_blank" href="https://eelsdb.eu/"><img src="/src/assets/img/EELS2.png" /></a>
+      <a target="_blank" href="https://eels.info/"><img src="/src/assets/img/EELS3.png" /></a>
     </div>
   </div>
 </template>
 
 <script setup name="HomePage">
-import { reactive, ref } from 'vue'
-import { getCurrentInstance, onMounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { SourceData } from '@/constants/options'
 import PeriodicTable from '@/components/PeriodicTable/index.vue'
 import MineralSelect from './components/MineralSelect/index.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import isEmpty from 'lodash/isEmpty'
 
 // const { proxy } = getCurrentInstance() //获取上下文实例，ctx=vue2的this
 
 const mineralModalVisible = ref(false)
 const isPeriodicShow = ref(false)
 const ruleFormRef = ref()
+const router = useRouter()
 
 const ruleForm = reactive({
   mineral: [],
   chemistry: [],
   chemicalFormula: '',
-  source: ''
+  source: []
 })
 
 const rules = reactive({
@@ -133,7 +90,14 @@ function checkAge(rule, value, callback) {
 }
 
 function handleSubmit() {
-  console.log(ruleForm, 'ruleForm')
+  const isEmptyInput = Object.values(ruleForm).every((item) => isEmpty(item))
+  if (isEmptyInput) {
+    return emptySearch()
+  }
+  router.push({
+    path: '/data-resources',
+    query: {}
+  })
 }
 
 function handleReset(formEl) {
@@ -143,6 +107,16 @@ function handleReset(formEl) {
 
 function handleClear() {
   ruleForm.chemistry = []
+}
+
+function emptySearch() {
+  return ElMessageBox.confirm('proxy will permanently delete the file. Continue?', 'Warning', {
+    confirmButtonText: 'OK',
+    showCancelButton: false,
+    type: 'warning',
+    center: true,
+    // customStyle: { position: 'relative', top: '-100px' }
+  })
 }
 </script>
 
